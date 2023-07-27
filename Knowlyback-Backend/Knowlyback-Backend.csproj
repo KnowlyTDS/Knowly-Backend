@@ -8,8 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Program.cs~RF2404c8b0.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.20">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,6 +26,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KnowlyApp.Core.Application\KnowlyApp.Core.Application.csproj" />
+    <ProjectReference Include="..\KnowlyApp.core.Domain\KnowlyApp.core.Domain.csproj" />
+    <ProjectReference Include="..\KnowlyApp.Infrastructure.Identity\KnowlyApp.Infrastructure.Identity.csproj" />
+    <ProjectReference Include="..\KnowlyApp.Infrastructure.Persistence\KnowlyApp.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\KnowlyApp.Infrastructure.Shared\KnowlyApp.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
 </Project>
