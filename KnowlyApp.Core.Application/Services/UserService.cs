@@ -23,8 +23,19 @@ namespace KnowlyApp.Core.Application.Services
         {
 
             var list = await _iuserRepository.GetAllAsync();
+            var temp = list.FirstOrDefault(x => x.Clave == vm.Password && x.Correo == vm.Email);
+            if (temp != null)
+            {
+                return new AuthenticationResponse
+                {
+                    Email = temp.Correo,
+                    HasError = false,
+                    IsVerified = true,
+                    UserName = temp.Nombre
+                };
+            }
 
-            throw new NotImplementedException();
+            throw new Exception("Datos incorrectos.");
         }
 
         public async Task<CreateUserResponse> RegisterAsync(CreateUserRequest vm)

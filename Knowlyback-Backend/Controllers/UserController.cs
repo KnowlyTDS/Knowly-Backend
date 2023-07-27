@@ -33,9 +33,16 @@ namespace Knowlyback_Backend.Controllers
             )]
         public async Task<IActionResult> Login([FromBody] AuthenticationRequest request)
         {
-            var user = await _iuserService.LoginAsync(request);
-
-            return Ok(user);
+            try
+            {
+                var user = await _iuserService.LoginAsync(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
+            }
+            
         }
 
 
