@@ -13,15 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{27C0465F-C90F-4436-AD41-17BD80E73538}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowlyApp.Core.Application", "KnowlyApp.Core.Application\KnowlyApp.Core.Application.csproj", "{E599A828-1733-410E-B428-2D354F5E69F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnowlyApp.Core.Application", "KnowlyApp.Core.Application\KnowlyApp.Core.Application.csproj", "{E599A828-1733-410E-B428-2D354F5E69F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowlyApp.core.Domain", "KnowlyApp.core.Domain\KnowlyApp.core.Domain.csproj", "{F739E223-12D8-440E-92D5-C73D75628C31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnowlyApp.core.Domain", "KnowlyApp.core.Domain\KnowlyApp.core.Domain.csproj", "{F739E223-12D8-440E-92D5-C73D75628C31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowlyApp.Infrastructure.Identity", "KnowlyApp.Infrastructure.Identity\KnowlyApp.Infrastructure.Identity.csproj", "{D9FBDEE8-60E8-4530-9FF2-D062800BFE99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnowlyApp.Infrastructure.Identity", "KnowlyApp.Infrastructure.Identity\KnowlyApp.Infrastructure.Identity.csproj", "{D9FBDEE8-60E8-4530-9FF2-D062800BFE99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowlyApp.Infrastructure.Persistence", "KnowlyApp.Infrastructure.Persistence\KnowlyApp.Infrastructure.Persistence.csproj", "{E5A0054C-F61D-4A45-BFBE-6881DA172585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnowlyApp.Infrastructure.Persistence", "KnowlyApp.Infrastructure.Persistence\KnowlyApp.Infrastructure.Persistence.csproj", "{E5A0054C-F61D-4A45-BFBE-6881DA172585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowlyApp.Infrastructure.Shared", "KnowlyApp.Infrastructure.Shared\KnowlyApp.Infrastructure.Shared.csproj", "{21FCCF93-D399-4067-88B3-A53E3857874F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnowlyApp.Infrastructure.Shared", "KnowlyApp.Infrastructure.Shared\KnowlyApp.Infrastructure.Shared.csproj", "{21FCCF93-D399-4067-88B3-A53E3857874F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

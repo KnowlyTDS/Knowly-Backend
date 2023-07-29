@@ -1,4 +1,4 @@
-﻿namespace KnowlyApp.core.Domain
+﻿namespace KnowlyApp.Core.Domain
 {
     public class Class1
     {
