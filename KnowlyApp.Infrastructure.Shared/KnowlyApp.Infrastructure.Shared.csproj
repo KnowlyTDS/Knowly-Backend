@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KnowlyApp.Core.Application\KnowlyApp.Core.Application.csproj" />
+    <ProjectReference Include="..\KnowlyApp.core.Domain\KnowlyApp.core.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
