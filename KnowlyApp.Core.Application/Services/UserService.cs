@@ -50,7 +50,7 @@ namespace KnowlyApp.Core.Application.Services
                     Direccion = vm.Direccion,
                     Telefono = vm.Telefono,
                     RolId = vm.RolId,
-                    
+                    UserId= vm.UserId,
                     Created = DateTime.Now
                 };
                 var tem = await _iuserRepository.AddAsync(userAdd);
