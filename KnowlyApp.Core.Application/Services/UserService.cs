@@ -1,4 +1,5 @@
-﻿using KnowlyApp.core.Domain.Entities;
+﻿using AutoMapper;
+using KnowlyApp.core.Domain.Entities;
 using KnowlyApp.Core.Application.Dtos.Account;
 using KnowlyApp.Core.Application.Dtos.User;
 using KnowlyApp.Core.Application.Interfaces.Repositories;
@@ -14,9 +15,12 @@ namespace KnowlyApp.Core.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _iuserRepository;
-        public UserService(IUserRepository iuserRepository)
+        private readonly IMapper _mapper;
+        public UserService(IUserRepository iuserRepository, IMapper mapper)
         {
             _iuserRepository = iuserRepository;
+            _mapper = mapper;
+
         }
 
         public async Task<AuthenticationResponse> LoginAsync(AuthenticationRequest vm)
@@ -40,34 +44,10 @@ namespace KnowlyApp.Core.Application.Services
 
         public async Task<CreateUserResponse> RegisterAsync(CreateUserRequest vm)
         {
-           
-                var userAdd = new Usuario
-                {
-                    Nombre = vm.Nombre,
-                    Apellido = vm.Apellido,
-                    Clave = vm.Clave,
-                    Correo = vm.Correo,
-                    Direccion = vm.Direccion,
-                    Telefono = vm.Telefono,
-                    RolId = vm.RolId,
-                    UserId= vm.UserId,
-                    Created = DateTime.Now
-                };
-                var tem = await _iuserRepository.AddAsync(userAdd);
-                var res = new CreateUserResponse
-                    {
-                     Nombre = vm.Nombre,
-                    Apellido = vm.Apellido,
-                    Clave = vm.Clave,
-                    Correo = vm.Correo,
-                    Direccion = vm.Direccion,
-                    Telefono = vm.Telefono,
-                    RolId = vm.RolId,
-                   HasError = false
-                };
-              return res;
-           
-           
+            Usuario entity = _mapper.Map<Usuario>(vm);
+            entity = await _iuserRepository.AddAsync(entity);
+            CreateUserResponse svm = _mapper.Map<CreateUserResponse>(entity);
+            return svm;
         }
     }
 }

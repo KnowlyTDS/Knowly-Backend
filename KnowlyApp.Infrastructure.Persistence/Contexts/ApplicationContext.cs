@@ -17,6 +17,7 @@ namespace KnowlyApp.Infrastructure.Persistence.Contexts
         
 
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Curso> Curso { get; set; }
 
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -48,22 +49,27 @@ namespace KnowlyApp.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<Usuario>()
                 .ToTable("Sis_Usuario");
 
+            modelBuilder.Entity<Curso>()
+               .ToTable("Sis_Curso");
+
             #endregion
 
             #region "primary keys"
 
             modelBuilder.Entity<Usuario>()
                .HasKey(f => f.Id);
+            modelBuilder.Entity<Curso>()
+               .HasKey(f => f.Id);
             #endregion
 
             #region "Relationships"
 
-            
-           // modelBuilder.Entity<Propiedad>()
-           //.HasMany<Favorita>(f => f.favorita)
-           //.WithOne(P => P.propiedad)
-           //.HasForeignKey(p => p.IdPropiedad)
-           //.OnDelete(DeleteBehavior.Cascade);
+
+            // modelBuilder.Entity<Propiedad>()
+            //.HasMany<Favorita>(f => f.favorita)
+            //.WithOne(P => P.propiedad)
+            //.HasForeignKey(p => p.IdPropiedad)
+            //.OnDelete(DeleteBehavior.Cascade);
 
             #endregion
 
@@ -87,6 +93,38 @@ namespace KnowlyApp.Infrastructure.Persistence.Contexts
              .IsRequired();
 
             #endregion
+
+            #region Curso
+            modelBuilder.Entity<Curso>().
+              Property(c => c.Titulo)
+              .IsRequired();
+
+            modelBuilder.Entity<Curso>().
+             Property(c => c.Instructor)
+             .IsRequired();
+
+            modelBuilder.Entity<Curso>().
+             Property(c => c.Descripcion)
+             .IsRequired();
+
+            modelBuilder.Entity<Curso>().
+             Property(c => c.Categoria)
+             .IsRequired();
+
+            modelBuilder.Entity<Curso>().
+             Property(c => c.Idioma)
+             .IsRequired();
+
+            modelBuilder.Entity<Curso>(entity =>
+            {
+                entity.Property(e => e.Precio).HasColumnType("decimal(18, 2)"); // Cambia 18 y 2 según tus necesidades
+                                                                                // Otras configuraciones para la entidad Curso...
+            });
+
+            #endregion
+
+
+
 
             #endregion
 

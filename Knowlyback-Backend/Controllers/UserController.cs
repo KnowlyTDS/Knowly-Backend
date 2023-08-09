@@ -65,8 +65,7 @@ namespace Knowlyback_Backend.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.InnerException?.Message ?? ex.Message);
-            }
-            
+            }           
 
             
         }

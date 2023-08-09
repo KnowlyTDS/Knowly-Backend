@@ -33,6 +33,7 @@ namespace KnowlyApp.Infrastructure.Persistence
 
             #region Repositories
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<ICursoRepository, CursoRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             #endregion
         }

@@ -14,10 +14,9 @@ namespace KnowlyApp.Core.Application
         public static void AddApplicationLayer(this IServiceCollection services,IConfiguration configuration)
         {
             #region Services
-            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            //services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IUserService, UserService>();
-
+            services.AddTransient<ICursoService, CursoService>();
             #endregion
         }
     }

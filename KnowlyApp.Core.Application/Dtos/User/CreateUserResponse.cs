@@ -8,6 +8,9 @@ namespace KnowlyApp.Core.Application.Dtos.User
 {
     public class CreateUserResponse
     {
+
+        public virtual int Id { get; set; }
+
         public bool HasError { get; set; }
         public String Error { get; set; }
         public string Nombre { get; set; }
