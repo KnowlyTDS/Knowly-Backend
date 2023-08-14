@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using KnowlyApp.Core.Application.DTOs.Account;
+using KnowlyApp.Core.Application.Enums;
+using KnowlyApp.Core.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using KnowlyApp.Core.Application.Enums;
-using KnowlyApp.Core.Application.DTOs.Account;
-using KnowlyApp.Core.Application.Interfaces.Services;
 
 namespace Knowlyback_Backend.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     [SwaggerTag("Manejo de sesion")]
@@ -21,16 +20,13 @@ namespace Knowlyback_Backend.Controllers
         }
 
         [HttpPost("authenticate")]
-
-        public async Task<IActionResult>AuthenticateAsync(AuthenticationRequest request)
+        public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest request)
         {
             return Ok(await _accountService.AuthenticateAsync(request));
         }
 
-
         [HttpPost("registeradmin")]
         [Authorize(Roles = "Admin")]
-
         public async Task<IActionResult> RegisterAdmin(NewUserRequest request)
         {
             if (!ModelState.IsValid)
@@ -51,7 +47,5 @@ namespace Knowlyback_Backend.Controllers
             request.UserType = Roles.Admin.ToString();
             return Ok(await _accountService.RegisterBasicUserAsync(register, origin));
         }
-
-
     }
 }

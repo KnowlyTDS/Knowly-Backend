@@ -11,7 +11,6 @@ namespace KnowlyApp.WebAPI.Extentions
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Knowly API");
                 options.DefaultModelRendering(ModelRendering.Model);
-
             });
         }
     }

@@ -1,19 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using KnowlyApp.Core.Application.DTOs.Account;
+using KnowlyApp.Core.Application.Interfaces.Services;
+using KnowlyApp.Core.Domain.Settings;
+using KnowlyApp.Infrastructure.Identity.Context;
+using KnowlyApp.Infrastructure.Identity.Entities;
+using KnowlyApp.Infrastructure.Identity.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using KnowlyApp.Core.Application.Interfaces.Services;
-using KnowlyApp.Infrastructure.Identity.Entities;
-using KnowlyApp.Infrastructure.Identity.Context;
-using KnowlyApp.Infrastructure.Identity.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using KnowlyApp.Core.Domain.Settings;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Newtonsoft.Json;
-using KnowlyApp.Core.Application.DTOs.Account;
-using Microsoft.AspNetCore.Http;
-
+using System.Text;
 
 namespace KnowlyApp.Infrastructure.Identity
 {
@@ -23,6 +22,7 @@ namespace KnowlyApp.Infrastructure.Identity
         public static void AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             #region Contexts
+
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
                 services.AddDbContext<IdentityContext>(options => options.UseInMemoryDatabase("IdentityDb"));
@@ -36,11 +36,13 @@ namespace KnowlyApp.Infrastructure.Identity
                     m => m.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));
                 });
             }
-            #endregion
+
+            #endregion Contexts
 
             #region Identity
-                        services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -94,19 +96,15 @@ namespace KnowlyApp.Infrastructure.Identity
                         return c.Response.WriteAsync(result);
                     }
                 };
-
             });
 
-            #endregion
+            #endregion Identity
 
-           #region Services
+            #region Services
 
             services.AddTransient<IAccountService, AccountService>();
 
-           #endregion
-
-
+            #endregion Services
         }
-
     }
 }

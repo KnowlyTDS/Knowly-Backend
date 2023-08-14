@@ -1,18 +1,19 @@
-using Microsoft.AspNetCore.Identity;
-using KnowlyApp.Infrastructure.Identity;
-using KnowlyApp.WebAPI.Extentions;
 using KnowlyApp.Core.Application;
+using KnowlyApp.Infrastructure.Identity;
 using KnowlyApp.Infrastructure.Identity.Entities;
 using KnowlyApp.Infrastructure.Identity.Seeds;
-
-
+using KnowlyApp.Infrastructure.Persistence;
+using KnowlyApp.Infrastructure.Shared;
+using KnowlyApp.WebAPI.Extentions;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetCore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
@@ -21,12 +22,10 @@ builder.Services.AddSession();
 builder.Services.AddSwaggerExtension();
 builder.Services.AddApiVersioningExtension();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddApplicationLayer(builder.Configuration);
+builder.Services.AddSharedInfrastructure(builder.Configuration);
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
-
-
-
-
 
 var app = builder.Build();
 
@@ -36,7 +35,6 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-
         var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -44,11 +42,9 @@ using (var scope = app.Services.CreateScope())
         await DefaultAdmin.SeedAsync(userManager, roleManager);
         await DefaultEstudiante.SeedAsync(userManager, roleManager);
         await DefaultMaestro.SeedAsync(userManager, roleManager);
-
     }
     catch (Exception ex)
     {
-
     }
 }
 
@@ -68,9 +64,6 @@ app.UseAuthorization();
 app.UseSession();
 app.UseHealthChecks("/health");
 
-
-
 app.MapControllers();
-
 
 app.Run();

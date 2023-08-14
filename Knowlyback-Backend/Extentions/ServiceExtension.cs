@@ -27,9 +27,8 @@ namespace KnowlyApp.WebAPI.Extentions
 
                 options.EnableAnnotations();
 
-
                 options.DescribeAllParametersInCamelCase();
-              
+
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -55,11 +54,8 @@ namespace KnowlyApp.WebAPI.Extentions
                         }, new List<string>()
                     },
                 });
-
             });
         }
-
-
 
         public static void AddApiVersioningExtension(this IServiceCollection services)
         {

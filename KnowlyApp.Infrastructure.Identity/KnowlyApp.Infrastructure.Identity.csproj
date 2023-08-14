@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KnowlyApp.Core.Application\KnowlyApp.Core.Application.csproj" />
-    <ProjectReference Include="..\KnowlyApp.core.Domain\KnowlyApp.core.Domain.csproj" />
+    <ProjectReference Include="..\KnowlyApp.Core.Domain\KnowlyApp.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>

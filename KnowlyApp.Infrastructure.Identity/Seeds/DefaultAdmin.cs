@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using KnowlyApp.Core.Application.Enums;
 using KnowlyApp.Infrastructure.Identity.Entities;
-using KnowlyApp.Core.Application.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace KnowlyApp.Infrastructure.Identity.Seeds
 {
@@ -22,9 +22,6 @@ namespace KnowlyApp.Infrastructure.Identity.Seeds
             {
                 await userManager.CreateAsync(users, "123Pa$$");
                 await userManager.AddToRoleAsync(users, Roles.Admin.ToString());
-
-
-
             }
         }
     }

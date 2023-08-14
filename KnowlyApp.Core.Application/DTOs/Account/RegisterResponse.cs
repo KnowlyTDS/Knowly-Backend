@@ -1,5 +1,4 @@
-﻿
-namespace KnowlyApp.Core.Application.DTOs.Account
+﻿namespace KnowlyApp.Core.Application.DTOs.Account
 {
     //Respues al request de registro
     public class RegisterResponse

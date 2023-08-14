@@ -11,7 +11,8 @@ namespace KnowlyApp.Core.Application.ViewModels.Users
         [Required(ErrorMessage = "*Debes colocar la contraseña.*")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
         public bool HasError { get; set; }
-        public string ? Error { get; set; }
+        public string? Error { get; set; }
     }
 }

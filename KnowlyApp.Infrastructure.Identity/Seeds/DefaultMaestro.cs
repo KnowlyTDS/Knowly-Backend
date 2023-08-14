@@ -2,7 +2,6 @@
 using KnowlyApp.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 
-
 namespace KnowlyApp.Infrastructure.Identity.Seeds
 {
     public class DefaultMaestro
@@ -23,9 +22,6 @@ namespace KnowlyApp.Infrastructure.Identity.Seeds
             {
                 await userManager.CreateAsync(users, "123Pa$$");
                 await userManager.AddToRoleAsync(users, Roles.Maestro.ToString());
-
-
-
             }
         }
     }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KnowlyApp.Core.Application.DTOs.Account
+﻿namespace KnowlyApp.Core.Application.DTOs.Account
 {
     public class JwtResponse
     {

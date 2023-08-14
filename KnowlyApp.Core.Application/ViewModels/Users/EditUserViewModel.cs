@@ -1,11 +1,9 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KnowlyApp.Core.Application.ViewModels.Users
 {
     public class EditUserViewModel
     {
-
         public string? Id { get; set; }
 
         [Required(ErrorMessage = "*Obligado*")]
@@ -26,10 +24,10 @@ namespace KnowlyApp.Core.Application.ViewModels.Users
         [Required(ErrorMessage = "*Obligado*")]
         [DataType(DataType.Text)]
         public string UserName { get; set; }
+
         public string? Role { get; set; }
         public string? UserType { get; set; }
         public bool HasError { get; set; }
         public string? Error { get; set; }
-
     }
 }

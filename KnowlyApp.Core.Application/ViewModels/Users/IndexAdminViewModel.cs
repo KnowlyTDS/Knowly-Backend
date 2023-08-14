@@ -1,6 +1,4 @@
-﻿
-
-namespace KnowlyApp.Core.Application.ViewModels.Users
+﻿namespace KnowlyApp.Core.Application.ViewModels.Users
 {
     public class IndexAdminViewModel
     {
@@ -10,6 +8,5 @@ namespace KnowlyApp.Core.Application.ViewModels.Users
 
         public int estudianteActive { get; set; }
         public int estudianteUnactive { get; set; }
-
     }
 }

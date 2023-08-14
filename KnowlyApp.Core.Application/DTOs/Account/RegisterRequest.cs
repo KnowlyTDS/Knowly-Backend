@@ -1,6 +1,4 @@
-﻿
-
-namespace KnowlyApp.Core.Application.DTOs.Account
+﻿namespace KnowlyApp.Core.Application.DTOs.Account
 {
     //variable que pide un para un Registro y valida
     public class RegisterRequest
@@ -15,7 +13,5 @@ namespace KnowlyApp.Core.Application.DTOs.Account
         public string Phone { get; set; }
         public string Photo { get; set; }
         public string UserType { get; set; }
-
-
     }
 }

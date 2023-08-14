@@ -52,6 +52,5 @@ namespace KnowlyApp.Core.Application.Services
             SaveViewModel saveView = _mapper.Map<SaveViewModel>(entity);
             return saveView;
         }
-
     }
 }

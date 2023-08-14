@@ -1,12 +1,11 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace   KnowlyApp.Core.Application.ViewModels.Users
+namespace KnowlyApp.Core.Application.ViewModels.Users
 {
     public class SaveUserViewModel
     {
-        public string ? Id { get; set; }
+        public string? Id { get; set; }
 
         public string? Photo { get; set; }
 
@@ -46,12 +45,12 @@ namespace   KnowlyApp.Core.Application.ViewModels.Users
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
-        
         public string UserType { get; set; }
 
         [DataType(DataType.Currency)]
         public double? StartingAmount { get; set; }
-        public bool  HasError { get; set; }
+
+        public bool HasError { get; set; }
         public string? Error { get; set; }
 
         public IFormFile? File { get; set; }

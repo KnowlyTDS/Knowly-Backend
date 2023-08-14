@@ -1,5 +1,4 @@
-﻿
-namespace KnowlyApp.Core.Application.Dtos.Account
+﻿namespace KnowlyApp.Core.Application.DTOs.Account
 {
     public class RefreshToken
     {
@@ -10,6 +9,6 @@ namespace KnowlyApp.Core.Application.Dtos.Account
         public DateTime? Created { get; set; }
         public DateTime? Revoked { get; set; }
         public string? ReplacedByToken { get; set; }
-        public bool IsActive => Revoked == null && !IsExpired;
+        public bool isActive => Revoked == null && !IsExpired;
     }
 }

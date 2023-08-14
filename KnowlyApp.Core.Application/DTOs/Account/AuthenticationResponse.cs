@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+
 namespace KnowlyApp.Core.Application.DTOs.Account
 {
     public class AuthenticationResponse
@@ -11,6 +12,7 @@ namespace KnowlyApp.Core.Application.DTOs.Account
         public bool HasError { get; set; }
         public string? Error { get; set; }
         public string? JWToken { get; set; }
+
         [JsonIgnore]
         public string? RefreshToken { get; set; }
     }

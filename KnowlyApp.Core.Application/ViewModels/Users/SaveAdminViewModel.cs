@@ -1,13 +1,10 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KnowlyApp.Core.Application.ViewModels.Users
 {
     public class SaveAdminViewModel
     {
-
-        public string ? Id { get; set; }
+        public string? Id { get; set; }
         public string? Photo { get; set; }
 
         [Required(ErrorMessage = "*Obligado*")]
@@ -22,7 +19,6 @@ namespace KnowlyApp.Core.Application.ViewModels.Users
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-
         [Required(ErrorMessage = "*Obligado*")]
         [DataType(DataType.Text)]
         public string UserName { get; set; }
@@ -36,10 +32,9 @@ namespace KnowlyApp.Core.Application.ViewModels.Users
         [Compare(nameof(Password), ErrorMessage = "Las contraseñas deben coincidir.")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
-        public string ? UserType { get; set; }
+
+        public string? UserType { get; set; }
         public bool HasError { get; set; }
         public string? Error { get; set; }
-
-
     }
 }

@@ -1,40 +1,36 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using KnowlyApp.Core.Application.DTOs.Account;
+﻿using KnowlyApp.Core.Application.DTOs.Account;
+using KnowlyApp.Core.Application.DTOs.Email;
 using KnowlyApp.Core.Application.Enums;
 using KnowlyApp.Core.Application.Interfaces.Services;
+using KnowlyApp.Core.Application.ViewModels.Estudiantes;
 using KnowlyApp.Core.Application.ViewModels.Maestros;
 using KnowlyApp.Core.Application.ViewModels.Users;
 using KnowlyApp.Core.Domain.Settings;
 using KnowlyApp.Infrastructure.Identity.Entities;
-//using KnowlyApp.Core.Application.DTOs.Email;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using System.Security.Cryptography;
-using KnowlyApp.Core.Application.ViewModels.Estudiantes;
-using KnowlyApp.Core.Application.Dtos.Account;
+using System.Text;
 
 namespace KnowlyApp.Infrastructure.Identity.Services
 {
     public class AccountService : IAccountService
     {
-
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
+        private readonly IEmailService _emailService;
         private readonly JWTSettings _jwtSettings;
 
-
-        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<JWTSettings> jwtSettings)
+        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, IOptions<JWTSettings> jwtSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-
+            _emailService = emailService;
             _jwtSettings = jwtSettings.Value;
-
         }
 
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
@@ -55,13 +51,7 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                 }
             }
 
-
-
             var result = await _signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
-
-
-
-
 
             if (!result.Succeeded)
             {
@@ -69,7 +59,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                 response.Error = $"Datos incorrectos para cuenta {request.Email}";
                 return response;
             }
-
 
             if (!user.EmailConfirmed)
             {
@@ -126,12 +115,10 @@ namespace KnowlyApp.Infrastructure.Identity.Services
             {
                 Email = request.Email,
                 Nombre = request.FirstName,
-                Apellido= request.LastName,
+                Apellido = request.LastName,
                 UserName = request.UserName,
                 Photo = request.Photo,
                 PhoneNumber = request.Phone
-
-
             };
             if (request.UserType == Roles.Admin.ToString())
             {
@@ -146,8 +133,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                 response.HasError = true;
                 response.Error = $"An error occurred trying to register the user.";
                 return response;
-
-
             }
             else
             {
@@ -155,31 +140,29 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                 {
                     await _userManager.AddToRoleAsync(user, Roles.Estudiante.ToString());
                     var verificationUri = await SendVerificationEmailUri(user, origin);
-                    
+                    await _emailService.SendAsync(new EmailRequest()
+                    {
+                        To = user.Email,
+                        Body = $"Porfavor confirma tu cuenta dando click al enlace {verificationUri}",
+                        Subject = "Correo de confirmacion"
+                    });
                 }
                 if (request.UserType == Roles.Maestro.ToString())
                 {
                     await _userManager.AddToRoleAsync(user, Roles.Maestro.ToString());
-
                 }
                 if (request.UserType == Roles.Admin.ToString())
                 {
                     await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
-
                 }
-               
             }
-
 
             return response;
         }
 
-
-
         public async Task<string> Activate_Desactivate(string userId, int action)
         {
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
-
 
             if (action == 0)
             {
@@ -198,8 +181,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                 user.EmailConfirmed = false;
             }
 
-
-
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
@@ -210,12 +191,7 @@ namespace KnowlyApp.Infrastructure.Identity.Services
             {
                 return $"Error mientras confirmaba la cuenta.";
             }
-
-
-
         }
-
-
 
         public async Task<string> ConfirmAccountAsync(string userId, string token)
         {
@@ -237,7 +213,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
             }
         }
 
-
         public async Task ChangePass(RegisterRequest request)
         {
             ApplicationUser User = await _userManager.FindByIdAsync(request.Id);
@@ -258,7 +233,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
             return verificationUri;
         }
 
-
         public async Task<List<MaestroViewModel>> GetAllMaestros()
         {
             List<MaestroViewModel> maestroViewModels = new();
@@ -277,7 +251,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                     agentView.isActive = user.EmailConfirmed;
                     agentView.Tel = user.PhoneNumber;
 
-
                     maestroViewModels.Add(agentView);
                 }
             }
@@ -288,7 +261,7 @@ namespace KnowlyApp.Infrastructure.Identity.Services
         public async Task<List<EstudiantesViewModel>> GetAllEstudiantes()
         {
             List<EstudiantesViewModel> estudianteViewModels = new();
-            var Users = _userManager.GetUsersInRoleAsync(Roles.Maestro.ToString()).Result.OrderBy(n => n.Nombre);
+            var Users = _userManager.GetUsersInRoleAsync(Roles.Estudiante.ToString()).Result.OrderBy(n => n.Nombre);
 
             foreach (var user in Users)
             {
@@ -298,11 +271,10 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                     agentView.Nombre = user.Nombre;
                     agentView.Apellido = user.Apellido;
                     agentView.Id = user.Id;
-                    agentView.Photo = user.Photo;
+                    agentView.Foto = user.Photo;
                     agentView.Email = user.Email;
                     agentView.isActive = user.EmailConfirmed;
                     agentView.Tel = user.PhoneNumber;
-
 
                     estudianteViewModels.Add(agentView);
                 }
@@ -327,19 +299,10 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                 newuser.Id = userView.Id;
                 newuser.Phone = userView.PhoneNumber;
                 agentViewModels.Add(newuser);
-
-
-
-
             }
-
-
 
             return agentViewModels;
         }
-
-
-
 
         public async Task Edit(RegisterRequest request, string role)
         {
@@ -347,10 +310,9 @@ namespace KnowlyApp.Infrastructure.Identity.Services
 
             if (role == "New")
             {
-                User.Photo= request.Photo;
+                User.Photo = request.Photo;
                 await _userManager.UpdateAsync(User);
             }
-
 
             if (role == Roles.Maestro.ToString())
             {
@@ -359,7 +321,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                 User.PhoneNumber = request.Phone;
                 User.Photo = request.Photo;
                 await _userManager.UpdateAsync(User);
-
             }
 
             if (role == Roles.Admin.ToString())
@@ -369,13 +330,7 @@ namespace KnowlyApp.Infrastructure.Identity.Services
                 User.UserName = request.UserName;
                 User.Email = request.Email;
                 await _userManager.UpdateAsync(User);
-
-
             }
-            
-
-
-
         }
 
         public async Task<RegisterRequest> GetUserById(string id)
@@ -390,9 +345,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
             response.Password = user.PasswordHash;
             response.Email = user.Email;
             response.Phone = user.PhoneNumber;
-
-
-
 
             return response;
         }
@@ -409,7 +361,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
             response.Password = user.PasswordHash;
             response.Email = user.Email;
             response.Phone = user.PhoneNumber;
-
 
             return response;
         }
@@ -441,7 +392,12 @@ namespace KnowlyApp.Infrastructure.Identity.Services
         {
             ApplicationUser application = await _userManager.FindByIdAsync(Id);
             await _userManager.DeleteAsync(application);
+        }
 
+        public async Task DeleteEstudiante(string Id)
+        {
+            ApplicationUser application = await _userManager.FindByIdAsync(Id);
+            await _userManager.DeleteAsync(application);
         }
 
         public async Task<string> GetRole(string Id)
@@ -450,8 +406,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
             var roles = await _userManager.GetRolesAsync(user);
             return roles.ElementAtOrDefault(0).ToString();
         }
-
-
 
         #region PrivateMethods
 
@@ -509,13 +463,6 @@ namespace KnowlyApp.Infrastructure.Identity.Services
             return BitConverter.ToString(ramdomBytes).Replace("-", "");
         }
 
-
-
-
-
-        #endregion
+        #endregion PrivateMethods
     }
-
-
 }
-

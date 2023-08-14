@@ -1,5 +1,4 @@
-﻿
-namespace KnowlyApp.Core.Application.DTOs.Account
+﻿namespace KnowlyApp.Core.Application.DTOs.Account
 {
     public class AuthenticationRequest
     {
